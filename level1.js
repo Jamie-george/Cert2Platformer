@@ -47,14 +47,21 @@ var LAYER_COUNT = level1.layers.length;
 var TILESET_COUNT_X = 14;
 var TILESET_COUNT_Y = 14;
 
+var MAP = {};
+MAP.tw = level1.layers[0].width;
+MAP.th = level1.layers[0].height;
+
 var TILE = level1.tilewidth;
 var TILESET_TILE = level1.tilesets[0].tilewidth;
 var TILESET_SPACING = level1.tilesets[0].spacing;
 var TILESET_MARGIN = level1.tilesets[0].margin;
 
+var LAYER_BACKGROUND = 0;
+var LAYER_PLATFORMS = 1;
+var LAYER_LADDERS = 2;
+
 function drawMap()
 {	
-	//Loops through layers
 	for (var layerIndex = 0; layerIndex <LAYER_COUNT; layerIndex++)
 	{
 		var itemIndex = 0;
