@@ -65,7 +65,9 @@ function run()
 		fpsTime -= 1;
 		fps = fpsCount;
 		fpsCount = 0;
-	}		
+	}	
+		
+	drawMap();
 		
 	// draw the FPS
 	context.fillStyle = "#f00";

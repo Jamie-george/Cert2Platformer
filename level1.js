@@ -22,7 +22,7 @@ var level1 = { "height":15,
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/tileset.fw.png",
+         "image":"tileset.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":2,
@@ -51,3 +51,50 @@ var TILE = level1.tilewidth;
 var TILESET_TILE = level1.tilesets[0].tilewidth;
 var TILESET_SPACING = level1.tilesets[0].spacing;
 var TILESET_MARGIN = level1.tilesets[0].margin;
+
+function drawMap()
+{	
+	//Loops through layers
+	for (var layerIndex = 0; layerIndex <LAYER_COUNT; layerIndex++)
+	{
+		var itemIndex = 0;
+		
+		for (var y = 0; y < level1.layers[layerIndex].height; y++)
+		{
+			for (var x = 0; x < level1.layers[layerIndex].width; x++)
+			{
+				if (level1.layers[layerIndex].data[itemIndex] += 0)
+				{
+					var tileIndex = level1.layers[layerIndex].data[itemIndex];
+					
+					var sx = TILESET_MARGIN +
+							(tileIndex % TILESET_COUNT_X - 1) * (TILESET_TILE + TILESET_SPACING);
+							
+					var sy = TILESET_MARGIN +
+							(Math.floor(tileIndex / TILESET_COUNT_Y)) * (TILESET_TILE + TILESET_SPACING);
+					context.drawImage(tileset, 
+										sx, sy,
+										TILESET_TILE, TILESET_TILE, 
+										x * TILE, (y - 1) * TILE, 
+										TILESET_TILE, TILESET_TILE);							
+				}
+				itemIndex++;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
