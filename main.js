@@ -23,6 +23,10 @@ function getDeltaTime()
 var SCREEN_WIDTH = canvas.width;
 var SCREEN_HEIGHT = canvas.height;
 
+//var LAYER_COUNT = 3;
+//var LAYER_BACKGOUND = 0;
+//var LAYER_PLATFORMS = 6;
+
 var fps = 0;
 var fpsCount = 0;
 var fpsTime = 0;
@@ -41,17 +45,18 @@ var FRICTION = MAXDX * 6;
 var JUMP = METER * 1500;
 
 var cells = [];
-function initialise()
-{
+function initialize()
+{	
 	for(var layerIndex = 0; layerIndex < LAYER_COUNT; layerIndex++)
+	{
 		cells[layerIndex] = [];
 		var itemIndex = 0;
 	
-	for(var y = 0; y < level1.layers[layerIndex].height; y++) 
+		for(var y = 0; y < level1.layers[layerIndex].height; y++) 
 		{
-		cells[layerIndex][y] = [];
-		for(var x = 0; x < level1.layers[layerIndex].width; x++) 
-			 {
+			cells[layerIndex][y] = [];
+			for(var x = 0; x < level1.layers[layerIndex].width; x++) 
+			{
 				if(level1.layers[layerIndex].data[itemIndex]!= 0) 
 				{
 					cells[layerIndex][y][x] = 1;
@@ -59,14 +64,16 @@ function initialise()
 					cells[layerIndex][y-1][x+1] = 1;
 					cells[layerIndex][y][x+1] = 1;
 				}
-	else if(cells[layerIndex][y][x] != 1) 
-		{
-			cells[layerIndex][y][x] = 0;
+				else if(cells[layerIndex][y][x] != 1) 
+				{
+					cells[layerIndex][y][x] = 0;
+				}
+				itemIndex++;
+			}	
 		}
-			itemIndex++;
-			}
-		}	
+	}	
 }
+
 	
 function cellAtPixelCoord(layer, x, y)
 {
@@ -78,9 +85,9 @@ function cellAtPixelCoord(layer, x, y)
 	return cellAtTimeCoord(layer, pixelToTile(x), pixelToTile(y));
 };
 
-function CellAtTileCoord(layer, tx, ty)
+function cellAtTileCoord(layer, tx, ty)
 {
-	if (tx < 0 || tx >= MAP.tw || ty < 0)
+	if (tx > 0 || tx >= MAP.tw || ty < 0)
 		return 1;
 	if (ty >= MAP.th)
 		return 0;
@@ -93,7 +100,7 @@ function tileToPixel(tile)
 	return tile * TILE;
 };
 
-function PixelToTile(pixel)
+function pixelToTile(pixel)
 {
 	return Math.floor(pixel / TILE);
 };
@@ -113,14 +120,14 @@ function bound(value, min, max)
 var player = new Player();
 var keyboard = new Keyboard();
 
-initialise();
-
 function run()
 {
 	context.fillStyle = "#ccc";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
 	var deltaTime = getDeltaTime();
+	
+	drawMap();
 	
 	player.update(deltaTime);
 	player.draw(context);
@@ -133,13 +140,48 @@ function run()
 		fps = fpsCount;
 		fpsCount = 0;
 	}	
-		
-	drawMap();
+	
+	//function cellAtPixelCoord(layer, x, y)
+	//{
+	//	if(x < 0 || x>SCREEN_WIDTH || y < 0)
+	//	return 1;
+	//	// let the player drop of the bottom of the screen (this means death)
+	//	if(y>SCREEN_HEIGHT)
+	//	return 0;
+	//	return cellAtTileCoord(layer, p2t(x), p2t(y));
+	//};
+	//function cellAtTileCoord(layer, tx, ty)
+	//{
+	//	if(tx<0 || tx>=MAP.tw || ty<0)
+	//	return 1;
+	//	// let the player drop of the bottom of the screen (this means death)
+	//	if(ty>=MAP.th)
+	//	return 0;
+	//	return cells[layer][ty][tx];
+	//};
+	//function tileToPixel(tile)
+	//{
+	//	return tile * TILE;
+	//};
+	//function pixelToTile(pixel)
+	//{
+	//	return Math.floor(pixel/TILE);
+	//};
+	//	function bound(value, min, max)
+	//{
+	//	if(value < min)
+	//	return min;
+	//	if(value > max)
+	//	return max;
+	//	return value;
+	//};	
 		
 	context.fillStyle = "#f00";
 	context.font="14px Arial";
 	context.fillText("FPS: " + fps, 5, 20, 100);
 }
+
+initialize();
 
 (function() {
   var onEachFrame;
