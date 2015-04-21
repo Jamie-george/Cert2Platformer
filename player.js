@@ -4,9 +4,9 @@ var RIGHT = 1;
 var ANIM_IDLE_LEFT = 0;
 var ANIM_JUMP_LEFT = 1;
 var ANIM_WALK_LEFT = 2;
-var ANIM_IDLE_RIGHT = 3;
-var ANIM_JUMP_RIGHT = 4;
-var ANIM_WALK_RIGHT = 5;
+var ANIM_IDLE_RIGHT = 5;
+var ANIM_JUMP_RIGHT = 6;
+var ANIM_WALK_RIGHT = 7;
 
 var ANIM_MAX = 6; // for now
 
@@ -120,7 +120,7 @@ Player.prototype.update = function(deltaTime)
 		this.velocity.x = bound(this.velocity.x + (deltaTime * acceleration.x), -MAXDX, MAXDX);
 		this.velocity.y = bound(this.velocity.y + (deltaTime * 	acceleration.y), -MAXDY, MAXDY);
 		
-		if (wasLeft &&(this.velocity.x > 0) ||
+		if (( wasLeft &&(this.velocity.x > 0)) ||
 			wasRight &&(this.velocity.x < 0))
 			this.velocity.x = 0;
 		
@@ -174,7 +174,7 @@ Player.prototype.update = function(deltaTime)
 	{
 		if ((cell && !cellright) || (celldown && !celldiag && ny))
 		{
-			this.position.x = TileToPixel(tx + 1);
+			this.position.x = tileToPixel(tx + 1);
 			this.velocity.x = 0;
 		}
 	}
@@ -183,14 +183,7 @@ Player.prototype.update = function(deltaTime)
 
 Player.prototype.draw = function()
 {
-	this.sprite.draw(context, this.position.x, this.position.y);
-	
-	//context.save();
-		//context.translate(this.x, this.y);
-		//context.rotate(this.rotation);
-		//context.drawImage(this.image, -this.width/2, -this.height/2);
-	//context.restore();
-	
+	this.sprite.draw(context, this.position.x, this.position.y);	
 };
 
 

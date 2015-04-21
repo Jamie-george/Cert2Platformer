@@ -87,12 +87,12 @@ function cellAtPixelCoord(layer, x, y)
 
 function cellAtTileCoord(layer, tx, ty)
 {
-	if (tx > 0 || tx >= MAP.tw || ty < 0)
+	if (tx < 0 || tx >= MAP.tw || ty < 0)
 		return 1;
 	if (ty >= MAP.th)
 		return 0;
 		
-	return cells[layer][tx][ty];
+	return cells[layer][ty][tx];
 };
 
 function tileToPixel(tile)
@@ -127,6 +127,40 @@ function run()
 	
 	var deltaTime = getDeltaTime();
 	
+	//function cellAtPixelCoord(layer, x, y)
+	//{
+	//	if(x < 0 || x>SCREEN_WIDTH || y < 0)
+	//	return 1;
+	//	// let the player drop of the bottom of the screen (this means death)
+	//	if(y>SCREEN_HEIGHT)
+	//	return 0;
+	//	return cellAtTileCoord(layer, p2t(x), p2t(y));
+	//};
+	//function cellAtTileCoord(layer, tx, ty)
+	//{
+	//	if(tx<0 || tx>=MAP.tw || ty<0)
+	//		return 1;
+	//	if(ty>=MAP.th)
+	//		return 0;
+	//			return cells[layer][ty][tx];
+	//};
+	//function tileToPixel(tile)
+	//{
+	//	return tile * TILE;
+	//};
+	//function pixelToTile(pixel)
+	//{
+	//	return Math.floor(pixel/TILE);
+	//};
+	//function bound(value, min, max)
+	//{
+	//	if(value < min)
+	//	return min;
+	//	if(value > max)
+	//	return max;
+	//	return value;
+	//};
+	
 	drawMap();
 	
 	player.update(deltaTime);
@@ -140,41 +174,7 @@ function run()
 		fps = fpsCount;
 		fpsCount = 0;
 	}	
-	
-	//function cellAtPixelCoord(layer, x, y)
-	//{
-	//	if(x < 0 || x>SCREEN_WIDTH || y < 0)
-	//	return 1;
-	//	// let the player drop of the bottom of the screen (this means death)
-	//	if(y>SCREEN_HEIGHT)
-	//	return 0;
-	//	return cellAtTileCoord(layer, p2t(x), p2t(y));
-	//};
-	//function cellAtTileCoord(layer, tx, ty)
-	//{
-	//	if(tx<0 || tx>=MAP.tw || ty<0)
-	//	return 1;
-	//	// let the player drop of the bottom of the screen (this means death)
-	//	if(ty>=MAP.th)
-	//	return 0;
-	//	return cells[layer][ty][tx];
-	//};
-	//function tileToPixel(tile)
-	//{
-	//	return tile * TILE;
-	//};
-	//function pixelToTile(pixel)
-	//{
-	//	return Math.floor(pixel/TILE);
-	//};
-	//	function bound(value, min, max)
-	//{
-	//	if(value < min)
-	//	return min;
-	//	if(value > max)
-	//	return max;
-	//	return value;
-	//};	
+		
 		
 	context.fillStyle = "#f00";
 	context.font="14px Arial";
