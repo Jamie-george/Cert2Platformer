@@ -63,6 +63,11 @@ level1 = { "height":15,
 }
 
 var LAYER_COUNT = 3;
+var LAYER_BACKGROUND = 0;
+var LAYER_PLATFORMS = 0;
+var LAYER_LADDERS = 2;
+
+
 var MAP = { tw: 60, th: 15 };
 
 var TILE = 35;
@@ -73,3 +78,38 @@ var TILESET_SPACING = 2;
 
 var TILESET_COUNT_X = 14;
 var TILESET_COUNT_Y = 14;
+
+var tileset = document.createElement("img");
+	tileset.src = "tileset.png";
+	
+function drawMap()
+{	
+	for (var layerIndex = 0; layerIndex <LAYER_COUNT; layerIndex++)
+	{
+		var itemIndex = 0;
+		
+		for (var y = 0; y < level1.layers[layerIndex].height; y++)
+		{
+			for (var x = 0; x < level1.layers[layerIndex].width; x++)
+			{
+				if (level1.layers[layerIndex].data[itemIndex] != 0)
+				{
+					var tileIndex = level1.layers[layerIndex].data[itemIndex];
+					
+					var sx = TILESET_PADDING +
+							(tileIndex % TILESET_COUNT_X - 1) * (TILESET_TILE + TILESET_SPACING);
+							
+					var sy = TILESET_PADDING +
+							(Math.floor(tileIndex / TILESET_COUNT_Y)) * (TILESET_TILE + TILESET_SPACING);
+					context.drawImage(tileset, 
+										sx, sy,
+										TILESET_TILE, TILESET_TILE, 
+										x * TILE, (y - 1) * TILE, 
+										TILESET_TILE, TILESET_TILE);							
+				}
+				itemIndex++;
+			}
+		}
+	}
+}
+	
